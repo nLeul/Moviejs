@@ -6,35 +6,38 @@ import Search from './components/Search';
 
 const App = () => {
 
-  const [title, setTitle] = useState("The matrix");
+  const [title, setTitle] = useState("");
+  const [query, setQuery] = useState("The matrix");
 
   useEffect(() => {
-    fetchMovies(title);
-  }, []);
+    fetchMovies(query);
+  }, [query]);
 
-  const searchHandler = (e) => {
-    e.preventDefault();
-    fetchMovies(title).then(movie => {
-      // setTitle(movie.Title);
-      // console.log(movie);
-    });
+  // const searchHandler = (e) => {
+  //   e.preventDefault();
+  //   fetchMovies(title).then(movie => {
+  //     // setTitle(movie.Title);
+  //     // console.log(movie);
+  //   });
 
-  }
+  // }
 
 
-  const fetchMovies = async (title) => {
-    const response = await fetch(`http://www.omdbapi.com/?t=${title}&apikey=ffc0da62`);
+  const fetchMovies = async (query) => {
+    const response = await fetch(`http://www.omdbapi.com/?t=${query}&apikey=ffc0da62`);
     const resJson = await response.json();
     console.log(resJson);
-    // setTitle(resJson.Title);
+    setTitle(resJson);
   }
+  // fetchMovies(query)
+  //   .then(movies=>console.log(movies))
 
 
   return (
     <div className="App">
-      <Header />
-      <Movies title="The Martix" runTime="123 MIn" year="2010" rating="4.5" />
-      <Search value={value} searchTag={(e)=>searchHandler(e)} />
+      <Header/>
+      <Movies title={title.Title} runTime={title.Runtime} year={title.Year} rating={title.Rating} poster={title.Poster}/>
+      <Search fetchMovies={(q) => fetchMovies(q)} />
     </div>
   );
 }
