@@ -13,17 +13,17 @@ const Search = (props) => {
     //   }
 
 
-    // const searchHandler = () => {
-    //     // e.preventDefault();
-    //     props.fetchMovies(searchValue)
+    const searchHandler = (e) => {
+        e.preventDefault();
+        props.fetchMovies(searchValue)
     
-    // }
+    }
     
     return (
         <div>
-            <form action="" onSubmit={()=>props.fetchMovies(searchValue)}>
+            <form action="" >
                 <input value={searchValue} onChange={e=>setSearchValue(e.target.value)} type="text" />
-                <button  >Search</button>
+                <button onClick={searchHandler}>Search</button>
             </form>
         </div>
     );
